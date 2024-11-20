@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Jadwal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Jadwal Kuliah</h1>
+    <form method="POST">
+        <label for="hari">Hari:</label>
+        <select class="form-select" name="hari" id="hari" required>
+            <option value="" disabled {{ 'selected' if not jadwal.hari else '' }}>Pilih Hari</option>
+            <option value="Senin" {{ 'selected' if jadwal.hari == 'Senin' else '' }}>Senin</option>
+            <option value="Selasa" {{ 'selected' if jadwal.hari == 'Selasa' else '' }}>Selasa</option>
+            <option value="Rabu" {{ 'selected' if jadwal.hari == 'Rabu' else '' }}>Rabu</option>
+            <option value="Kamis" {{ 'selected' if jadwal.hari == 'Kamis' else '' }}>Kamis</option>
+            <option value="Jumat" {{ 'selected' if jadwal.hari == 'Jumat' else '' }}>Jumat</option>
+            <option value="Sabtu" {{ 'selected' if jadwal.hari == 'Sabtu' else '' }}>Sabtu</option>
+        </select>
+        <br>
+        <label for="jam_mulai">Jam Mulai:</label>
+        <input type="time" id="jam_mulai" name="jam_mulai" value="{{ jadwal.jam_mulai.strftime('%H:%M') }}" required>
+        <br>
+        <label for="jam_selesai">Jam Selesai:</label>
+        <input type="time" id="jam_selesai" name="jam_selesai" value="{{ jadwal.jam_selesai.strftime('%H:%M') }}" required>
+        <br>
+        <button type="submit">Simpan Perubahan</button>
+    </form>
+    <a href="{{ url_for('profile_mahasiswa') }}">Kembali</a>
+</body>
+</html>

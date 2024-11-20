@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Mahasiswa</title>
+</head>
+<body>
+    <h1>Selamat Datang di Profile Mahasiswa</h1>
+    {% if current_user.is_authenticated %}
+        <p>Halo, {{ current_user.nama_mahasiswa }}!</p>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+        <a href="{{ url_for('add_jadwal') }}">Tambah Jadwal</a>
+        <p>Jadwal Kamu:</p>
+        <ul>
+            {% for jadwal in current_user.jadwal_kuliah %}
+                <li>{{ jadwal.hari }} - {{ jadwal.jam_mulai }} sampai {{ jadwal.jam_selesai }}</li>
+                <a href="{{ url_for('edit_jadwal', jadwal_id=jadwal.id_jadwal) }}">Edit</a>
+                <form action="{{ url_for('delete_jadwal', jadwal_id=jadwal.id_jadwal) }}" method="POST">
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </form>
+                
+            {% else %}
+                <p>Belum ada jadwal.</p>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <a href="{{ url_for('login_mahasiswa') }}" class="btn btn-primary">Login</a>
+    {% endif %}
+</body>
+</html>

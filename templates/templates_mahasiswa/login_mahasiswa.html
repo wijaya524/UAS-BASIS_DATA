@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    {% extends "index.html" %}
+
+    {% block content %}
+    <h2>Login</h2>
+    <!-- Menampilkan pesan flash jika ada -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('login_mahasiswa') }}">
+        <!-- CSRF Protection jika diaktifkan -->
+    
+
+        <div class="mb-3">
+            <label for="nim">Nim Mahasiswa</label>
+            <input type="number" name="nim" id="nim" class="form-control" placeholder="Masukkan NIM" required>
+        </div>
+        <div class="mb-3">
+            <label for="password">Password</label>
+            <input type="password" name="password_mahasiswa" id="password" class="form-control" placeholder="Masukkan password"
+                required>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    {% endblock %}
+
+
+</body>
+
+</html>

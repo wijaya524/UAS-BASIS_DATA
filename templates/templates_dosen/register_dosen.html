@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends "index.html" %}
+
+{% block content %}
+<h2>Register</h2>
+<form method="POST">
+
+    <div class="mb-3">
+        <label for="">Nama Dosen</label>
+        <input type="text" name="nama_dosen" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="">Alamat Dosen</label>
+        <input type="text" name="alamat_dosen">
+    </div>
+    <div class="mb-3">
+        <label for="">No telp dosen</label>
+        <input type="number" name="no_telp_dosen">
+    </div>
+    <div class="mb-3">
+        <label for="">Password</label>
+        <input type="password" name="password_dosen">
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+{% endblock %}
+
+</body>
+</html>
