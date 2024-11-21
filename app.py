@@ -98,7 +98,27 @@ def login_mahasiswa():
 @app.route('/profile_mahasiswa')
 @login_required
 def profile_mahasiswa():
-    return render_template('templates_mahasiswa/profile_mahasiswa.html')
+    # Ambil semua jadwal milik mahasiswa yang sedang login
+    jadwal_list = current_user.jadwal_kuliah
+    
+    # Hitung total durasi
+    total_minutes = 0
+    for jadwal in jadwal_list:
+        jam_mulai = datetime.strptime(str(jadwal.jam_mulai), '%H:%M:%S')
+        jam_selesai = datetime.strptime(str(jadwal.jam_selesai), '%H:%M:%S')
+        duration = (jam_selesai - jam_mulai).seconds // 60  # Dalam menit
+        total_minutes += duration
+    
+    total_hours = total_minutes // 60
+    remaining_minutes = total_minutes % 60
+
+    return render_template(
+        'templates_mahasiswa/profile_mahasiswa.html',
+        jadwal_list=jadwal_list,
+        total_hours=total_hours,
+        remaining_minutes=remaining_minutes
+    )
+
 
 #Sukses register mahasiswa
 @app.route('/register_mahasiswa_success')
@@ -169,7 +189,26 @@ def login_dosen():
 @app.route('/profile_dosen')
 @login_required
 def profile_dosen():
-    return render_template('templates_dosen/profile_dosen.html')
+    # Ambil semua jadwal milik mahasiswa yang sedang login
+    jadwal_list = current_user.jadwal_kuliah
+    
+    # Hitung total durasi
+    total_minutes = 0
+    for jadwal in jadwal_list:
+        jam_mulai = datetime.strptime(str(jadwal.jam_mulai), '%H:%M:%S')
+        jam_selesai = datetime.strptime(str(jadwal.jam_selesai), '%H:%M:%S')
+        duration = (jam_selesai - jam_mulai).seconds // 60  # Dalam menit
+        total_minutes += duration
+    
+    total_hours = total_minutes // 60
+    remaining_minutes = total_minutes % 60
+
+    return render_template(
+        'templates_dosen/profile_dosen.html',
+        jadwal_list=jadwal_list,
+        total_hours=total_hours,
+        remaining_minutes=remaining_minutes
+    )
 
 #Register Dosen Success
 @app.route('/register_dosen_success')
