@@ -46,23 +46,20 @@ def register_mahasiswa():
         alamat_mahasiswa = request.form['alamat_mahasiswa']
         tanggal_lahir = request.form['tanggal_lahir']
         jenis_kelamin = request.form['jenis_kelamin']
-        password_mahasiswa = request.form['password_mahasiswa']
 
-        if not nama_mahasiswa or not password_mahasiswa or not alamat_mahasiswa or not tanggal_lahir or not jenis_kelamin:
+        if not nama_mahasiswa or not alamat_mahasiswa or not tanggal_lahir or not jenis_kelamin:
             flash('Semua field harus diisi.', 'danger')
             return redirect(url_for('register_mahasiswa'))
 
         # Generate NIM otomatis
         nim = generate_nim()
 
-        # Buat user baru tanpa hashing password
         new_user = Mahasiswa_2395114030(
             nim=nim,
             nama_mahasiswa=nama_mahasiswa,
             alamat_mahasiswa=alamat_mahasiswa,
             tanggal_lahir=tanggal_lahir,
             jenis_kelamin=jenis_kelamin,
-            password_mahasiswa=password_mahasiswa  # Simpan password dalam bentuk plaintext
         )
 
         db.session.add(new_user)
@@ -79,21 +76,20 @@ def register_mahasiswa():
 def login_mahasiswa():
     if request.method == 'POST':
         nim = request.form.get('nim')
-        password_mahasiswa = request.form.get('password_mahasiswa')
 
         # Validasi input pengguna
-        if not nim or not password_mahasiswa:
-            flash('NIM dan password harus diisi.', 'danger')
+        if not nim:
+            flash('NIM harus diisi.', 'danger')
             return redirect(url_for('login_mahasiswa'))
 
         # Cari user berdasarkan NIM
         user = Mahasiswa_2395114030.query.filter_by(nim=nim).first()
-        if user and user.password_mahasiswa == password_mahasiswa:  # Bandingkan password plaintext
+        if user: 
             login_user(user)
             flash('Login berhasil!', 'success')
             return redirect(url_for('profile_mahasiswa'))
         else:
-            flash('NIM atau password salah.', 'danger')
+            flash('NIM atau salah.', 'danger')
             return redirect(url_for('login_mahasiswa'))
 
     return render_template('templates_mahasiswa/login_mahasiswa.html')
@@ -119,9 +115,8 @@ def register_dosen():
         nama_dosen = request.form['nama_dosen']
         alamat_dosen = request.form['alamat_dosen']
         no_telp_dosen = request.form['no_telp_dosen']
-        password_dosen = request.form['password_dosen']
 
-        if not nama_dosen or not  alamat_dosen or not no_telp_dosen or not password_dosen:
+        if not nama_dosen or not  alamat_dosen or not no_telp_dosen:
             flash('Semua field harus diisi.', 'danger')
             return redirect(url_for('register_mahasiswa'))
 
@@ -133,7 +128,6 @@ def register_dosen():
             nama_dosen=nama_dosen,
             alamat_dosen=alamat_dosen,
             no_telp_dosen=no_telp_dosen,
-             password_dosen= password_dosen  # Simpan password dalam bentuk plaintext
         )
 
         db.session.add(new_user)
@@ -151,22 +145,21 @@ def register_dosen():
 def login_dosen():
     if request.method == 'POST':
         nidn = request.form.get('nidn')
-        password_dosen = request.form.get('password_dosen')
 
         # Validasi input pengguna
-        if not nidn or not password_dosen:
-            flash('NIM dan password harus diisi.', 'danger')
+        if not nidn :
+            flash('NIM harus diisi.', 'danger')
             return redirect(url_for('login_dosen'))
 
         # Cari user berdasarkan NIM
         user = Dosen_2395114030.query.filter_by(nidn=nidn).first()
-        if user and user.password_dosen == password_dosen:  # Bandingkan password plaintext
+        if user :  
             login_user(user)
             flash('Login berhasil!', 'success')
             print(f"Logged in user: {current_user.nama_dosen}") 
             return redirect(url_for('profile_dosen'))
         else:
-            flash('NIDN atau password salah.', 'danger')
+            flash('NIDN salah.', 'danger')
             return redirect(url_for('login_dosen'))
 
     return render_template('templates_dosen/login_dosen.html')
@@ -174,6 +167,7 @@ def login_dosen():
 
 #Profile Dosen
 @app.route('/profile_dosen')
+@login_required
 def profile_dosen():
     return render_template('templates_dosen/profile_dosen.html')
 

@@ -25,7 +25,6 @@ class Mahasiswa_2395114030(UserMixin, db.Model):
     alamat_mahasiswa = db.Column(db.String(255))
     tanggal_lahir = db.Column(db.Date)
     jenis_kelamin = db.Column(db.String(10))
-    password_mahasiswa = db.Column(db.String(128), nullable=False)
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     jadwal_kuliah = db.relationship('JadwalKuliah_2395114030', secondary=mahasiswa_jadwal, backref='mahasiswa')
@@ -40,7 +39,6 @@ class Dosen_2395114030(UserMixin, db.Model):
     nama_dosen = db.Column(db.String(100), nullable=False)
     alamat_dosen = db.Column(db.String(255))
     no_telp_dosen = db.Column(db.String(15))
-    password_dosen = db.Column(db.String(128), nullable=False)
 
     jadwal_kuliah = db.relationship('JadwalKuliah_2395114030', secondary=dosen_jadwal, backref='dosen')
 
