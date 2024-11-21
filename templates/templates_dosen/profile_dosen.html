@@ -22,6 +22,9 @@
         <form action="{{ url_for('delete_jadwal', jadwal_id=jadwal.id_jadwal) }}" method="POST">
             <button type="submit" class="btn btn-danger">Hapus</button>
         </form>
+        {% if jadwal_list %}
+        <p>Total Durasi: {{ total_hours }} jam {{ remaining_minutes }} menit</p>
+        {% endif %}
 
         {% else %}
         <p>Belum ada jadwal.</p>
