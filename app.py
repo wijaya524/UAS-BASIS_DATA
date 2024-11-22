@@ -259,8 +259,7 @@ def edit_dosen(nidn):
             flash(f'Kesalahan: {str(e)}', 'danger')
             db.session.rollback()
 
-    return render_template('templates_dosen/edit_dosen.html', nidn=nidn)
-
+    return render_template('templates_dosen/edit_dosen.html', dosen=dosen)
 
 
 #Profile Dosen
