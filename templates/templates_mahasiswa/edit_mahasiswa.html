@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Mahasiswa</title>
+</head>
+<body>
+    <h1>Edit Data Mahasiswa</h1>
+    <form method="POST">
+        <label for="nama_mahasiswa">Nama Mahasiswa:</label>
+        <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" value="{{ mahasiswa.nama_mahasiswa }}" required>
+        <br>
+        <label for="alamat_mahasiswa">Alamat:</label>
+        <input type="text" id="alamat_mahasiswa" name="alamat_mahasiswa" value="{{ mahasiswa.alamat_mahasiswa }}" required>
+        <br>
+        <label for="tanggal_lahir">Tanggal Lahir:</label>
+        <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ mahasiswa.tanggal_lahir }}" required>
+        <br>
+        <label for="jenis_kelamin">Jenis Kelamin:</label>
+        <select id="jenis_kelamin" name="jenis_kelamin" required>
+            <option value="Laki-laki" {% if mahasiswa.jenis_kelamin == "Laki-laki" %}selected{% endif %}>Laki-laki</option>
+            <option value="Perempuan" {% if mahasiswa.jenis_kelamin == "Perempuan" %}selected{% endif %}>Perempuan</option>
+        </select>
+        <br>
+        <button type="submit">Simpan Perubahan</button>
+    </form>
+    <a href="{{ url_for('profile_mahasiswa') }}">Kembali</a>
+</body>
+</html>

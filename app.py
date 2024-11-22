@@ -94,6 +94,43 @@ def login_mahasiswa():
 
     return render_template('templates_mahasiswa/login_mahasiswa.html')
 
+#Edit Mahasiswa 
+@app.route('/edit_mahasiswa', methods=['GET', 'POST'])
+@login_required
+def edit_mahasiswa():
+    # Menggunakan current_user untuk mendapatkan mahasiswa yang sedang login
+    mahasiswa = current_user
+
+    if request.method == 'POST':
+        # Ambil data dari form
+        nama_mahasiswa = request.form.get('nama_mahasiswa')
+        alamat_mahasiswa = request.form.get('alamat_mahasiswa')
+        tanggal_lahir = request.form.get('tanggal_lahir')
+        jenis_kelamin = request.form.get('jenis_kelamin')
+
+        # Validasi input
+        if not nama_mahasiswa or not alamat_mahasiswa or not tanggal_lahir or not jenis_kelamin:
+            flash('Semua field harus diisi.', 'danger')
+            return redirect(url_for('edit_mahasiswa'))
+
+        try:
+            # Update data mahasiswa
+            mahasiswa.nama_mahasiswa = nama_mahasiswa
+            mahasiswa.alamat_mahasiswa = alamat_mahasiswa
+            mahasiswa.tanggal_lahir = datetime.strptime(tanggal_lahir, '%Y-%m-%d').date()
+            mahasiswa.jenis_kelamin = jenis_kelamin
+
+            db.session.commit()
+            flash('Data mahasiswa berhasil diperbarui.', 'success')
+            return redirect(url_for('profile_mahasiswa'))
+        except Exception as e:
+            flash(f'Kesalahan: {str(e)}', 'danger')
+            db.session.rollback()
+
+    return render_template('templates_mahasiswa/edit_mahasiswa.html', mahasiswa=mahasiswa)
+
+
+
 #Profile Mahasiswa
 @app.route('/profile_mahasiswa')
 @login_required
