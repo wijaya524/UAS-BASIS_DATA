@@ -254,12 +254,12 @@ def edit_dosen(nidn):
 
             db.session.commit()
             flash('Data dosen berhasil diperbarui.', 'success')
-            return redirect(url_for('profile_dosen'))
+            return redirect(url_for('profile_dosen', nidn=dosen.nidn))
         except Exception as e:
             flash(f'Kesalahan: {str(e)}', 'danger')
             db.session.rollback()
 
-    return render_template('templates_dosen/edit_dosen.html', dosen=dosen)
+    return render_template('templates_dosen/edit_dosen.html', nidn=nidn)
 
 
 
