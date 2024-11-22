@@ -222,6 +222,47 @@ def login_dosen():
     return render_template('templates_dosen/login_dosen.html')
 
 
+#Edit dosen
+# Edit Dosen
+@app.route('/edit_dosen/<int:nidn>', methods=['GET', 'POST'])
+@login_required
+def edit_dosen(nidn):
+    # Cari dosen berdasarkan NIDN
+    dosen = Dosen_2395114030.query.get_or_404(nidn)
+
+    # Periksa apakah pengguna saat ini memiliki akses
+    if current_user.nidn != dosen.nidn:
+        flash('Anda tidak memiliki akses untuk mengedit data ini.', 'danger')
+        return redirect(url_for('profile_dosen'))
+
+    if request.method == 'POST':
+        # Ambil data dari form
+        nama_dosen = request.form.get('nama_dosen')
+        alamat_dosen = request.form.get('alamat_dosen')
+        no_telp_dosen = request.form.get('no_telp_dosen')
+
+        # Validasi input
+        if not nama_dosen or not alamat_dosen or not no_telp_dosen:
+            flash('Semua field harus diisi.', 'danger')
+            return redirect(url_for('edit_dosen', nidn=nidn))
+
+        try:
+            # Update data dosen
+            dosen.nama_dosen = nama_dosen
+            dosen.alamat_dosen = alamat_dosen
+            dosen.no_telp_dosen = no_telp_dosen
+
+            db.session.commit()
+            flash('Data dosen berhasil diperbarui.', 'success')
+            return redirect(url_for('profile_dosen'))
+        except Exception as e:
+            flash(f'Kesalahan: {str(e)}', 'danger')
+            db.session.rollback()
+
+    return render_template('templates_dosen/edit_dosen.html', dosen=dosen)
+
+
+
 #Profile Dosen
 @app.route('/profile_dosen')
 @login_required

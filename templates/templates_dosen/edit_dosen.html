@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profil Dosen</title>
+</head>
+
+<body>
+    <h1>Edit Profil Dosen</h1>
+
+    <form method="POST">
+        <label for="nama_dosen">Nama Dosen:</label>
+        <input type="text" id="nama_dosen" name="nama_dosen" value="{{ dosen.nama_dosen }}" required><br><br>
+
+        <label for="alamat_dosen">Alamat:</label>
+        <input type="text" id="alamat_dosen" name="alamat_dosen" value="{{ dosen.alamat_dosen }}" required><br><br>
+
+        <label for="no_telp_dosen">No Telepon:</label>
+        <input type="text" id="no_telp_dosen" name="no_telp_dosen" value="{{ dosen.no_telp_dosen }}" required><br><br>
+
+        <button type="submit">Simpan Perubahan</button>
+    </form>
+
+    <a href="{{ url_for('profile_dosen') }}">Kembali ke Profil</a>
+</body>
+
+</html>
