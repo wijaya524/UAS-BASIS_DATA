@@ -4,37 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Profile Dosen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
     {% block content %}
-    <h1>Selamat Datang di profile dosen</h1>
-    {% if current_user.is_authenticated %}
-    <p>Halo, {{ current_user.nama_dosen }}!</p>
-    <a href="{{ url_for('edit_dosen', nidn=current_user.nidn) }}">Edit Profil</a>
-    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
-    <a href="{{ url_for('add_jadwal') }}">Tambah Jadwal</a>
-    <p>Jadwal Kamu:</p>
-    <ul>
-        {% for jadwal in current_user.jadwal_kuliah %}
-        <li>{{ jadwal.hari }} - {{ jadwal.jam_mulai }} sampai {{ jadwal.jam_selesai }}</li>
-        <a href="{{ url_for('edit_jadwal', jadwal_id=jadwal.id_jadwal) }}">Edit</a>
-        <form action="{{ url_for('delete_jadwal', jadwal_id=jadwal.id_jadwal) }}" method="POST">
-            <button type="submit" class="btn btn-danger">Hapus</button>
-        </form>
-        {% if jadwal_list %}
-        <p>Total Durasi: {{ total_hours }} jam {{ remaining_minutes }} menit</p>
-        {% endif %}
+    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl">
+        <h1 class="text-3xl font-bold text-indigo-600 mb-4">Selamat Datang di Profile Dosen</h1>
 
+        {% if current_user.is_authenticated %}
+        <p class="text-gray-700 mb-6">Halo, <span class="font-semibold">{{ current_user.nama_dosen }}</span>!</p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 mb-6">
+            <a href="{{ url_for('edit_dosen', nidn=current_user.nidn) }}" 
+               class="bg-yellow-500 text-white py-2 px-4 rounded-md text-center hover:bg-yellow-600">
+               Edit Profil
+            </a>
+            <a href="{{ url_for('logout') }}" 
+               class="bg-red-500 text-white py-2 px-4 rounded-md text-center hover:bg-red-600">
+               Logout
+            </a>
+            <a href="{{ url_for('add_jadwal') }}" 
+               class="bg-green-500 text-white py-2 px-4 rounded-md text-center hover:bg-green-600">
+               Tambah Jadwal
+            </a>
+        </div>
+
+        <p class="text-lg font-semibold mb-4">Jadwal Kamu:</p>
+        <ul class="space-y-4">
+            {% for jadwal in current_user.jadwal_kuliah %}
+            <li class="bg-gray-50 shadow-md p-4 rounded-lg">
+                <p class="text-gray-800">{{ jadwal.hari }} - {{ jadwal.jam_mulai }} sampai {{ jadwal.jam_selesai }}</p>
+                <div class="flex gap-4 mt-2">
+                    <a href="{{ url_for('edit_jadwal', jadwal_id=jadwal.id_jadwal) }}" 
+                       class="text-blue-500 hover:underline">
+                       Edit
+                    </a>
+                    <form action="{{ url_for('delete_jadwal', jadwal_id=jadwal.id_jadwal) }}" method="POST">
+                        <button type="submit" 
+                                class="text-red-500 hover:underline">
+                            Hapus
+                        </button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+        {% if not current_user.jadwal_kuliah %}
+        <p class="text-gray-500">Belum ada jadwal.</p>
+        {% endif %}
         {% else %}
-        <p>Belum ada jadwal.</p>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <a href="{{ url_for('login_dosen') }}" class="btn btn-primary">Login</a>
-    <!-- Menambahkan tanda penutup > di sini -->
-    {% endif %}
+        <div class="flex justify-center">
+            <a href="{{ url_for('login_dosen') }}" 
+               class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
+               Login
+            </a>
+        </div>
+        {% endif %}
+    </div>
     {% endblock %}
 </body>
 
