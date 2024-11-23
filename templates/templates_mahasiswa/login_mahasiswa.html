@@ -4,38 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
     {% extends "index.html" %}
 
     {% block content %}
-    <h2>Login</h2>
-    <!-- Menampilkan pesan flash jika ada -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }}">
-        {{ message }}
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
+    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+        <h2 class="text-2xl font-bold text-center text-indigo-600 mb-4">Login</h2>
 
-    <form method="POST" action="{{ url_for('login_mahasiswa') }}">
-        <!-- CSRF Protection jika diaktifkan -->
-    
-
-        <div class="mb-3">
-            <label for="nim">Nim Mahasiswa</label>
-            <input type="number" name="nim" id="nim" class="form-control" placeholder="Masukkan NIM" required>
+        <!-- Menampilkan pesan flash jika ada -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="space-y-2">
+            {% for category, message in messages %}
+            <div class="p-3 rounded-md text-white 
+                        {% if category == 'success' %} bg-green-500 
+                        {% elif category == 'error' %} bg-red-500 
+                        {% elif category == 'info' %} bg-blue-500 
+                        {% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login_mahasiswa') }}" class="space-y-4 mt-4">
+            <!-- CSRF Protection jika diaktifkan -->
+
+            <div>
+                <label for="nim" class="block text-sm font-medium text-gray-700">NIM Mahasiswa</label>
+                <input type="number" name="nim" id="nim" 
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500" 
+                       placeholder="Masukkan NIM" required>
+            </div>
+
+            <button type="submit" 
+                    class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                Login
+            </button>
+        </form>
+    </div>
     {% endblock %}
-
-
 </body>
 
 </html>
