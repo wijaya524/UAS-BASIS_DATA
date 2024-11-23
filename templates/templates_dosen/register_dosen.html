@@ -3,31 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Register Dosen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
     {% extends "index.html" %}
 
-{% block content %}
-<h2>Register</h2>
-<form method="POST">
-
-    <div class="mb-3">
-        <label for="">Nama Dosen</label>
-        <input type="text" name="nama_dosen" class="form-control">
+    {% block content %}
+    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+        <h2 class="text-2xl font-bold text-indigo-600 text-center mb-6">Register Dosen</h2>
+        <form method="POST" class="space-y-4">
+            <div>
+                <label for="nama_dosen" class="block text-sm font-medium text-gray-700">Nama Dosen</label>
+                <input type="text" name="nama_dosen" id="nama_dosen" 
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
+            </div>
+            <div>
+                <label for="alamat_dosen" class="block text-sm font-medium text-gray-700">Alamat Dosen</label>
+                <input type="text" name="alamat_dosen" id="alamat_dosen" 
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
+            </div>
+            <div>
+                <label for="no_telp_dosen" class="block text-sm font-medium text-gray-700">No Telp Dosen</label>
+                <input type="number" name="no_telp_dosen" id="no_telp_dosen" 
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
+            </div>
+            <button type="submit" 
+                    class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                Register
+            </button>
+        </form>
     </div>
-    <div class="mb-3">
-        <label for="">Alamat Dosen</label>
-        <input type="text" name="alamat_dosen">
-    </div>
-    <div class="mb-3">
-        <label for="">No telp dosen</label>
-        <input type="number" name="no_telp_dosen">
-    </div>
-
-    <button type="submit" class="btn btn-primary">Register</button>
-</form>
-{% endblock %}
-
+    {% endblock %}
 </body>
 </html>
