@@ -4,27 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Mahasiswa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Edit Data Mahasiswa</h1>
-    <form method="POST">
-        <label for="nama_mahasiswa">Nama Mahasiswa:</label>
-        <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" value="{{ mahasiswa.nama_mahasiswa }}" required>
-        <br>
-        <label for="alamat_mahasiswa">Alamat:</label>
-        <input type="text" id="alamat_mahasiswa" name="alamat_mahasiswa" value="{{ mahasiswa.alamat_mahasiswa }}" required>
-        <br>
-        <label for="tanggal_lahir">Tanggal Lahir:</label>
-        <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ mahasiswa.tanggal_lahir }}" required>
-        <br>
-        <label for="jenis_kelamin">Jenis Kelamin:</label>
-        <select id="jenis_kelamin" name="jenis_kelamin" required>
-            <option value="Laki-laki" {% if mahasiswa.jenis_kelamin == "Laki-laki" %}selected{% endif %}>Laki-laki</option>
-            <option value="Perempuan" {% if mahasiswa.jenis_kelamin == "Perempuan" %}selected{% endif %}>Perempuan</option>
-        </select>
-        <br>
-        <button type="submit">Simpan Perubahan</button>
-    </form>
-    <a href="{{ url_for('profile_mahasiswa') }}">Kembali</a>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+        <h1 class="text-2xl font-bold text-indigo-600 text-center mb-6">Edit Data Mahasiswa</h1>
+        <form method="POST" class="space-y-4">
+            <div>
+                <label for="nama_mahasiswa" class="block text-sm font-medium text-gray-700">Nama Mahasiswa:</label>
+                <input type="text" id="nama_mahasiswa" name="nama_mahasiswa" 
+                       value="{{ mahasiswa.nama_mahasiswa }}" required
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div>
+                <label for="alamat_mahasiswa" class="block text-sm font-medium text-gray-700">Alamat:</label>
+                <input type="text" id="alamat_mahasiswa" name="alamat_mahasiswa" 
+                       value="{{ mahasiswa.alamat_mahasiswa }}" required
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div>
+                <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir:</label>
+                <input type="date" id="tanggal_lahir" name="tanggal_lahir" 
+                       value="{{ mahasiswa.tanggal_lahir }}" required
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div>
+                <label for="jenis_kelamin" class="block text-sm font-medium text-gray-700">Jenis Kelamin:</label>
+                <select id="jenis_kelamin" name="jenis_kelamin" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="Laki-laki" {% if mahasiswa.jenis_kelamin == "Laki-laki" %}selected{% endif %}>Laki-laki</option>
+                    <option value="Perempuan" {% if mahasiswa.jenis_kelamin == "Perempuan" %}selected{% endif %}>Perempuan</option>
+                </select>
+            </div>
+            <button type="submit" 
+                    class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                Simpan Perubahan
+            </button>
+        </form>
+        <div class="mt-4 text-center">
+            <a href="{{ url_for('profile_mahasiswa') }}" 
+               class="text-indigo-600 hover:underline">Kembali</a>
+        </div>
+    </div>
 </body>
 </html>
