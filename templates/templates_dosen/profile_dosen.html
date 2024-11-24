@@ -31,11 +31,12 @@
             </a>
         </div>
 
-        <p class="text-lg font-semibold mb-4">Jadwal Kamu:</p>
+        <p class="text-lg font-semibold mb-4">Jadwal Anda:</p>
         <ul class="space-y-4">
             {% for jadwal in current_user.jadwal_kuliah %}
             <li class="bg-gray-50 shadow-md p-4 rounded-lg">
                 <p class="text-gray-800">{{ jadwal.hari }} - {{ jadwal.jam_mulai }} sampai {{ jadwal.jam_selesai }}</p>
+                <p class="text-gray-700 mt-4">Total Durasi: <span class="font-semibold">{{ total_hours }}</span> jam
                 <div class="flex gap-4 mt-2">
                     <a href="{{ url_for('edit_jadwal', jadwal_id=jadwal.id_jadwal) }}" 
                        class="text-blue-500 hover:underline">
