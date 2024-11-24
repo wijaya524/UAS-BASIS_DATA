@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, request, session, url_for, f
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 import random
-from models import Dosen_2395114030, JadwalKuliah_2395114030, db, Mahasiswa_2395114030, generate_nidn
+from models import Dosen_2395114030, JadwalKuliah_2395114030, db, Mahasiswa_2395114030, generate_nidn, generate_nim
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
@@ -29,10 +29,10 @@ def load_user(user_id):
     # Jika tidak ditemukan, coba sebagai Dosen
     return Dosen_2395114030.query.filter_by(nidn=user_id).first()
 
-def generate_nim():
-    """Generate NIM otomatis dengan awalan 23 dan total panjang 10 digit."""
-    random_digits = random.randint(10000000, 99999999)
-    return int(f"23{random_digits}")
+# def generate_nim():
+#     """Generate NIM otomatis dengan awalan 23 dan total panjang 10 digit."""
+#     random_digits = random.randint(10000000, 99999999)
+#     return int(f"23{random_digits}")
 
 @app.route("/")
 def index():
